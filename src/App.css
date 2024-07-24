@@ -6,12 +6,15 @@
   box-sizing: border-box;
   font-family: 'Raleway', sans-serif;
 }
+
 html,body{
   display: grid;
   height: 100%;
   width: 100%;
   place-items: center;
   background: -webkit-linear-gradient(left, #9896F0,#FBC8D5);
+  scroll-behavior: smooth;
+  
 }
 ::selection{
   background: #12e8f0;
@@ -180,3 +183,16 @@ form .btn input[type="submit"]{
   font-weight: 500;
   cursor: pointer;
 }
+.custom-file-upload {
+  cursor: pointer;
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+}
+
+.custom-file-upload:hover {
+  background-color: #e0e0e0;
+}
+

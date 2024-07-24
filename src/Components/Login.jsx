@@ -1,11 +1,11 @@
 import React from 'react'
 import '../App.css';
 import { useState } from 'react';
-import Home from './Home';
+import App from '../App';
 
 const Login = () => {
     const [isLogin, setIsLogin] = useState(true);
-    const [done,setDone] =useState(false);
+    const [done,setDone] =useState(true);
     const handleSignupClick = () => {
       setIsLogin(false);
     };
@@ -16,7 +16,7 @@ const Login = () => {
   
     return (
       <>
-      {done ? <Home/> : 
+      {done ? <App/> : 
       <div className="wrapper">
         <div className="title-text">
           <div
