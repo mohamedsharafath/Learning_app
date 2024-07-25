@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import FileUpload from '../Frontend/FileUpload';
 
 const Container = styled.div`
   font-family: 'Arial, sans-serif';
@@ -150,9 +151,8 @@ const FooterLink = styled.a`
   }
 `;
 
-const Home = () => {
+const Home = ({setfunc}) => {
   
-  const GoToSummarize = () =>{}
 
   return (
     <Container>
@@ -172,13 +172,13 @@ const Home = () => {
         <Headline>Welcome to StudyAssist</Headline>
         <SubHeadline>Your AI-powered study companion</SubHeadline>
         {/* <p>Upload <span style={{color: '#000', fontSize: '18px', fontWeight: '900'}}>PDF/DOCX/TXT/PPTX</span> file</p> */}
-        <a href="#features"><CTAButton
+        {/* <CTAButton
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           
         >
-          Get Started 
-        </CTAButton></a>
+        </CTAButton> */}
+          <FileUpload setfunc={setfunc}/>
         
       </HeroSection>
       <FeaturesSection id="features">
