@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import FileUpload from '../Frontend/FileUpload';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   font-family: 'Arial, sans-serif';
@@ -152,7 +154,9 @@ const FooterLink = styled.a`
 `;
 
 const Home = ({setfunc}) => {
-  
+  const Navigate=useNavigate();
+  const location = useLocation();
+  const { loguser } = location.state || {};
 
   return (
     <Container>
@@ -169,7 +173,7 @@ const Home = ({setfunc}) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <Headline>Welcome to StudyAssist</Headline>
+        <Headline>Welcome to StudyAssist {loguser.name}</Headline>
         <SubHeadline>Your AI-powered study companion</SubHeadline>
         {/* <p>Upload <span style={{color: '#000', fontSize: '18px', fontWeight: '900'}}>PDF/DOCX/TXT/PPTX</span> file</p> */}
         {/* <CTAButton
@@ -187,26 +191,28 @@ const Home = ({setfunc}) => {
           <FeatureItem>
             <h4>Smart Flashcards</h4>
             <p>Automatically generated flashcards from your study materials.</p>
-            <Link to="/flashcards">
+            {/* <Link to="/flashcards"> */}
             <CTAButton
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          onClick={()=>Navigate("/flashcards")}
         >
           Generate Flascards
         </CTAButton>
-        </Link>
+        {/* </Link> */}
           </FeatureItem>
           <FeatureItem>
             <h4>Personalized Quiz</h4>
             <p>Quizzes tailored to your learning progress and needs.</p>
-            <Link to="/quiz">
+            {/* <Link to="/quiz"> */}
               <CTAButton
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                onClick={()=>Navigate("/quiz")}
               >
                 Take Quiz
               </CTAButton>
-            </Link>
+            {/* </Link> */}
           </FeatureItem>
           <FeatureItem>
             <h4>Short Summarizing</h4>
