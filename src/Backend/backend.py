@@ -1,10 +1,13 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Request, Form
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
+from fastapi.responses import FileResponse
+import pypandoc
 from docx import Document
 from pypdf import PdfReader
 from pptx import Presentation
+from fpdf import FPDF
 import random
 import string
 import json
@@ -13,6 +16,7 @@ import json
 # from quiz_generator import export_quiz
 # from flash_card_generator import export_flashcards
 # from summary_generator import export_summary
+from export_summary import export_summary
 from gemini import prompt_everyting
 # from speech_to_text import get_audio
 
@@ -213,6 +217,24 @@ async def upload(file: UploadFile = File(...)):
 #         export_quiz(data["quiz"], "Quiz.docx")
 #         return FileResponse("Quiz.docx", filename="Quiz.docx")
 
+@app.post("/export")
+async def export(request: Request):
+    req = await request.json()
+    selected = req.get("selected")
+    data = req.get("data")
+    
+    filename = ""
+    if selected == 0:
+        filename = "Summary.docx"
+        export_summary(data, filename)
+    # elif selected == 1:
+    #     filename = "Flashcards.docx"
+    #     export_flashcards(data, filename)
+    # else:
+    #     filename = "Quiz.docx"
+    #     export_quiz(data, filename)
+    
+    return FileResponse(path=filename, filename=filename, media_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=5000)

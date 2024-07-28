@@ -41,7 +41,7 @@ genai.configure(api_key=KEY)
 
 
 def prompt_summary(prompt):
-    model = genai.GenerativeModel("gemini-pro")
+    model = genai.GenerativeModel("gemini-1.5-flash")
     response = model.generate_content(
         "Given the following transcript, give a thorugh summary of the main parts. Be as detailed as possible. Have a few main points which are bolded, and a lot of smaller subpoints, which use bullet points and are under the mainpoints.  USE MARKDOWN. DO NOT WRITE ANYTHING ELSE EXCEPT THE SUMMARY. FOR EXAMPLE, DO NOT WRITE Summary of Main Points: or Main Points: Start with an Overview"
         + prompt

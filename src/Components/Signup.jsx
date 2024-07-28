@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+// import "./log.css"
+import  "../App.css";
 
 import { useNavigate } from "react-router-dom";
 
@@ -98,7 +99,7 @@ const Signup = () => {
           <input
             className="input-field"
             type="text"
-            placeholder="email"
+            placeholder="Email"
             onChange={handleEmail}
           />
           <input

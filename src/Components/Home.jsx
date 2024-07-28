@@ -37,6 +37,7 @@ const Nav = styled.nav`
 
 const NavLink = styled.a`
   text-decoration: none;
+  font-weight:800;
   color: #007bff;
   font-size: 1em;
   &:hover {
@@ -173,7 +174,7 @@ const Home = ({setfunc}) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <Headline>Welcome to StudyAssist {loguser.name}</Headline>
+        <Headline>Welcome to StudyAssist </Headline>
         <SubHeadline>Your AI-powered study companion</SubHeadline>
         {/* <p>Upload <span style={{color: '#000', fontSize: '18px', fontWeight: '900'}}>PDF/DOCX/TXT/PPTX</span> file</p> */}
         {/* <CTAButton

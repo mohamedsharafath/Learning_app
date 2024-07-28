@@ -2,7 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-
+// import "./log.css"
+import '../App.css';
 
 export default function Login() {
   const [loguser,setuser]=useState({

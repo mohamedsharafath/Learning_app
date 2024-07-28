@@ -25,7 +25,7 @@ const FileUpload = ({setfunc}) => {
       });
       setfunc(response.data);
       toast.dismiss(); 
-    toast.success("Document summarized successfully!");
+    toast.success("Document Uploaded successfully!");
     } catch (error) {
       toast.dismiss();
     toast.error("There was an error summarizing the document.");
