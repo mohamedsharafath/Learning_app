@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { color, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import FileUpload from '../Frontend/FileUpload';
 import { useLocation } from 'react-router-dom';
@@ -162,7 +162,7 @@ const Home = ({setfunc}) => {
   return (
     <Container>
       <Header>
-        <Logo>StudyAssist</Logo>
+        <Logo>MY TUTOR</Logo>
         <Nav>
           <NavLink href="#features">Features</NavLink>
           <NavLink href="#testimonials">Testimonials</NavLink>
@@ -174,7 +174,7 @@ const Home = ({setfunc}) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <Headline>Welcome to StudyAssist </Headline>
+        <Headline>Welcome to <span style={{color:"black"}}>MY TUTOR</span> </Headline>
         <SubHeadline>Your AI-powered study companion</SubHeadline>
         {/* <p>Upload <span style={{color: '#000', fontSize: '18px', fontWeight: '900'}}>PDF/DOCX/TXT/PPTX</span> file</p> */}
         {/* <CTAButton
@@ -240,12 +240,12 @@ const Home = ({setfunc}) => {
           <p>- John Smith</p>
         </Testimonial>
       </TestimonialsSection>
-      <Footer>
-        <p>© 2024 StudyAssist. All rights reserved.</p>
+      <Footer id="contact">
+        <p>© 2024 MY TUTOR. All rights reserved.</p>
         <SocialLinks>
           <FooterLink href="#">Facebook</FooterLink>
           <FooterLink href="#">Twitter</FooterLink>
-          <FooterLink href="#">LinkedIn</FooterLink>
+          <FooterLink href="https://www.linkedin.com/in/mohamed-sharafath-a35377253/" target='blank'>LinkedIn</FooterLink>
         </SocialLinks>
       </Footer>
     </Container>

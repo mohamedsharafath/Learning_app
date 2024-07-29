@@ -10,19 +10,19 @@ KEY = os.environ.get('GOOGLE_GENERATIVEAI_API_KEY')
 genai.configure(api_key=KEY)
 
 
-# def prompt_flashcards(prompt):
-#     model = genai.GenerativeModel("gemini-pro")
-#     response = model.generate_content(
-#         "Given the following transcript, make 10 flashcards. Return these in JSON format. It should be a list of lists, where each sublist is two elements where the first element is the question/vocab word and the second element is the answer/definition. Don't output anything besides the JSON. Here is the transcript"
-#         + prompt
-#     )
-#     text = response.text
-#     text = "".join(text.split("\n")[1:-1])
-#     return json.loads(text)
+def prompt_flashcards(prompt):
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    response = model.generate_content(
+        "Given the following transcript, make 10 flashcards. Return these in JSON format. It should be a list of lists, where each sublist is two elements where the first element is the question/vocab word and the second element is the answer/definition. Don't output anything besides the JSON. Here is the transcript"
+        + prompt
+    )
+    text = response.text
+    text = "".join(text.split("\n")[1:-1])
+    return json.loads(text)
 
 
 # def prompt_quiz(prompt):
-#     model = genai.GenerativeModel("gemini-pro")
+#     model = genai.GenerativeModel("gemini-1.5-flash")
 #     response = model.generate_content(
 #         "Given the following transcript, I want you to generate a quiz with 10 questions. The quiz should be in JSON format. It should be a list of JSON objects. Each JSON object should have three fields:question, possible_answers, and index.  Question is a string. possible_answers should be a list of possible answers. Only one answer should be correct.  index should be a number and should be the index of the correct answer. Remember to put the answer in a random index so its harder to cheat! Please shuffle!!! Do not say anything other than this JSON"
 #         + prompt
@@ -60,13 +60,13 @@ def prompt_summary(prompt):
 
 def prompt_everyting(prompt):
     summary = prompt_summary(prompt)
-    # flash_cards = prompt_flashcards(prompt)
+    flash_cards = prompt_flashcards(prompt)
     # quiz = prompt_quiz(prompt)
     # title = prompt_title(prompt)
 
     return {
         "summary": summary,
-        # "flash_cards": flash_cards,
+        "flash_cards": flash_cards,
         # "quiz": quiz,
         # "title": title,
     }

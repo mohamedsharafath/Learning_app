@@ -17,9 +17,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<Signup />} />
-        <Route path="/login" element={<Login />} /> */}
-        <Route path="/" element={<Home setfunc={setdata}/>} />
+        <Route path="/" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="/" element={<Home setfunc={setdata}/>} /> */}
         <Route path="/home" element={<Home setfunc={setdata}/>} />
         <Route path="/summarization" element={<Summarization response={responseData}/>} />
         <Route path="/quiz" element={<Quiz response={responseData}/>} />
