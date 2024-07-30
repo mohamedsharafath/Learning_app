@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { color, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import FileUpload from '../Frontend/FileUpload';
+import FileUpload from '../Frontend/FileUpload/FileUpload';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 

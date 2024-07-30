@@ -16,7 +16,9 @@ import json
 # from quiz_generator import export_quiz
 # from flash_card_generator import export_flashcards
 # from summary_generator import export_summary
-from export_summary import export_summary
+from Summary.export_summary import export_summary
+from Quiz.export_quiz import export_quiz
+from FlashCards.export_flashcards import export_flashcards
 from gemini import prompt_everyting
 # from speech_to_text import get_audio
 
@@ -227,12 +229,12 @@ async def export(request: Request):
     if selected == 0:
         filename = "Summary.docx"
         export_summary(data, filename)
-    # elif selected == 1:
-    #     filename = "Flashcards.docx"
-    #     export_flashcards(data, filename)
-    # else:
-    #     filename = "Quiz.docx"
-    #     export_quiz(data, filename)
+    elif selected == 1:
+        filename = "Flashcards.docx"
+        export_flashcards(data, filename)
+    else:
+        filename = "Quiz.docx"
+        export_quiz(data, filename)
     
     return FileResponse(path=filename, filename=filename, media_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
 if __name__ == "__main__":

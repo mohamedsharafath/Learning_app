@@ -2,6 +2,46 @@ import React, { useState, useEffect } from "react";
 import { Card, Col, Row, Button, Tooltip } from "antd";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+const api_server = "http://127.0.0.1:8000";
+
+const ExportButton = ({ data, selected }) => {
+  const handleExport = async () => {
+    try {
+        const response = await fetch(`${api_server}/export`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ data, selected }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to export");
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = selected === 0 ? "Summary.docx" : selected === 1 ? "Flashcards.docx" : "Quiz.docx";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('There was an error exporting the document!', error);
+    }
+};
+
+    return (
+        <Button
+            onClick={handleExport}
+            className="button-default"
+            style={{ marginTop: "20px", marginBottom: "20px" }}
+        >
+            Export {selected === 0 ? "Summary" : selected === 1 ? "Flashcards" : "Quiz"}
+        </Button>
+    );
+};
 const FlashCards = ({ response }) => {
   const [currentCard, setCurrentCard] = useState(0);
   const [side, setSide] = useState(0);
@@ -46,7 +86,11 @@ const FlashCards = ({ response }) => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1 style={{ textAlign: "left" }}>Flashcards:</h1>
+      <div>
+        <h1 style={{ textAlign: "left" }}>Flashcards:</h1>
+        <ExportButton data={flashCards} selected={1} /> 
+
+      </div>
       <Row justify="space-between" align="middle" style={{ marginTop: "20px" }}>
         <Tooltip title="Left Arrow" color={"var(--main-blue)"}>
           <Button

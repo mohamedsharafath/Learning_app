@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Col, Row, Button } from "antd";
 
-const api_server = "http://localhost:8000";
+const api_server = "http://127.0.0.1:8000";
 
 const ExportButton = ({ data, selected }) => {
   const handleExport = async () => {
@@ -51,6 +51,7 @@ const Summarization = ({ response }) => {
     if (response != null) {
       setSummary(response.summary);
     }
+    console.log(response.quiz);
   }, [response]);
 
   const newData = summary.replace("** ", "** /n");

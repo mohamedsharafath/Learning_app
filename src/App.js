@@ -2,9 +2,9 @@ import './App.css';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Home from './Components/Home';
-import Summarization from './Frontend/Summarization';
-import Quiz from './Frontend/Quiz';
-import FlashCards from './Frontend/FlashCards';
+import Summarization from './Frontend/Summarization/Summarization';
+import Quiz from './Frontend/Quiz/Quiz';
+import FlashCards from './Frontend/FlashCards/FlashCards';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 

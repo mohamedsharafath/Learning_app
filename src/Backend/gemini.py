@@ -21,23 +21,23 @@ def prompt_flashcards(prompt):
     return json.loads(text)
 
 
-# def prompt_quiz(prompt):
-#     model = genai.GenerativeModel("gemini-1.5-flash")
-#     response = model.generate_content(
-#         "Given the following transcript, I want you to generate a quiz with 10 questions. The quiz should be in JSON format. It should be a list of JSON objects. Each JSON object should have three fields:question, possible_answers, and index.  Question is a string. possible_answers should be a list of possible answers. Only one answer should be correct.  index should be a number and should be the index of the correct answer. Remember to put the answer in a random index so its harder to cheat! Please shuffle!!! Do not say anything other than this JSON"
-#         + prompt
-#     )
-#     text = response.text
-#     text = "".join(text.split("\n")[1:-1])
-#     # need to shuffle possible answers because a lot of the times gemini does not do that
+def prompt_quiz(prompt):
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    response = model.generate_content(
+        "Given the following transcript, I want you to generate a quiz with 10 questions. The quiz should be in JSON format. It should be a list of JSON objects. Each JSON object should have three fields:question, possible_answers, and index.  Question is a string. possible_answers should be a list of possible answers. Only one answer should be correct.  index should be a number and should be the index of the correct answer. Remember to put the answer in a random index so its harder to cheat! Please shuffle!!! Do not say anything other than this JSON"
+        + prompt
+    )
+    text = response.text
+    text = "".join(text.split("\n")[1:-1])
+    # need to shuffle possible answers because a lot of the times gemini does not do that
 
-#     j = json.loads(text)
-#     for question in j:
-#         ans = question["possible_answers"][question["index"]]
-#         random.shuffle(question["possible_answers"])
-#         question["index"] = question["possible_answers"].index(ans)
+    j = json.loads(text)
+    for question in j:
+        ans = question["possible_answers"][question["index"]]
+        random.shuffle(question["possible_answers"])
+        question["index"] = question["possible_answers"].index(ans)
 
-#     return j
+    return j
 
 
 def prompt_summary(prompt):
@@ -61,13 +61,13 @@ def prompt_summary(prompt):
 def prompt_everyting(prompt):
     summary = prompt_summary(prompt)
     flash_cards = prompt_flashcards(prompt)
-    # quiz = prompt_quiz(prompt)
+    quiz = prompt_quiz(prompt)
     # title = prompt_title(prompt)
 
     return {
         "summary": summary,
         "flash_cards": flash_cards,
-        # "quiz": quiz,
+        "quiz": quiz,
         # "title": title,
     }
 
