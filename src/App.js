@@ -1,6 +1,7 @@
 import './App.css';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
+import Signin from './Components/Signin';
 import Home from './Components/Home';
 import Summarization from './Frontend/Summarization/Summarization';
 import Quiz from './Frontend/Quiz/Quiz';
@@ -17,8 +18,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Signin />} />
+        {/* <Route path="/" element={<Signup />} /> */}
+        {/* <Route path="/login" element={<Login />} /> */}
         {/* <Route path="/" element={<Home setfunc={setdata}/>} /> */}
         <Route path="/home" element={<Home setfunc={setdata}/>} />
         <Route path="/summarization" element={<Summarization response={responseData}/>} />
