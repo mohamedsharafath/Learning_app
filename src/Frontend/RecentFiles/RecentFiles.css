@@ -1,0 +1,154 @@
+/* .recent-files-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.fetch-files-button {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+}
+
+.file-item {
+  margin-bottom: 10px;
+}
+
+.file-item button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.file-item button:hover {
+  background: #0056b3;
+}
+
+.file-viewer {
+  margin-top: 20px;
+}
+
+.back-button {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.back-button:hover {
+  background: #5a6268;
+}
+
+.error-message {
+  color: red;
+} */
+/* Color Variables */
+:root {
+  --primary-color: #2D3250;    /* 1st rank - majority color */
+  --secondary-color: #424769;  /* 2nd rank - secondary color */
+  --tertiary-color: #7077A1;   /* 3rd rank - accent color */
+  --quaternary-color: #F6B17A; /* 4th rank - minor space color */
+}
+
+.recent-files-container {
+  padding: 20px;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #F5EDED;
+  font-weight: bolder;
+  font-size: 40px
+}
+
+.fetch-files-button {
+  display: block;
+  width: 20%;
+  padding: 10px;
+  margin-bottom: 20px;
+  
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  margin-bottom: 20px;
+        font-weight: bolder;
+        font-size: 20px;
+        background-color: var(--quaternary-color);
+        color: var(--primary-color);
+        border: 1px solid var(--quaternary-color),
+  
+}
+
+.fetch-files-button:hover {
+  background-color: var(--primary-color);
+  color: var(--tertiary-color);
+  border: none;
+}
+
+.loading, .error-message, .no-files {
+  text-align: center;
+  color: var(--tertiary-color);
+  margin-top: 20px;
+}
+
+.error-message {
+  color: red;
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.file-item {
+  margin-bottom: 15px;
+}
+
+.file-box {
+  padding: 15px;
+  /* background-color: var(--primary-color); */
+  color: var(--quaternary-color);
+  border-radius: 10px;
+  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
+  text-align: center;
+  
+}
+
+.file-button {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--quaternary-color);
+  font-size: 16px;
+  padding: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  margin-right: 20px;
+}
+
+.file-button:hover {
+  color: var(--tertiary-color);
+}

@@ -21,6 +21,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    justify-content: space-around;
   }
   
   .upload-button {
@@ -47,3 +48,52 @@
   .upload-button::selection{
     
   }
+  /* From Uiverse.io by MetaBlue2000 */ 
+.formField {
+  margin: 10px;
+  position: relative;
+  /* width: 20px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.formField input {
+  
+  padding: 20px 15px 10px 15px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  color: #333;
+  font-size: 16px;
+  font-weight: 550;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 0 0 5px transparent;
+}
+
+.formField input:hover,
+.formField input:focus {
+  box-shadow: 0px 0px 0px 3px #ccc;
+}
+
+.formField span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 13px 15px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  text-shadow: -1px -1px 0 #f1f1f1, 1px -1px 0 #f1f1f1, -1px 1px 0 #f1f1f1,
+    1px 1px 0 #f1f1f1;
+  transition: 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.formField input:focus + span,
+.formField input:valid + span {
+  transform: translateY(-12px) translateX(-5px) scale(0.95);
+  transition: 0.3s ease-in-out;
+}

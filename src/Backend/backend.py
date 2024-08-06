@@ -2,7 +2,13 @@ from fastapi import FastAPI, File, UploadFile, HTTPException, Request, Form
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from fastapi.responses import FileResponse
+from io import BytesIO
+from mimetypes import guess_type
+from pymongo import MongoClient
+from gridfs import GridFS
+from motor.motor_asyncio import AsyncIOMotorClient
+from bson import ObjectId
+from fastapi.responses import JSONResponse, StreamingResponse
 import pypandoc
 from docx import Document
 from pypdf import PdfReader
@@ -32,6 +38,77 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Initialize the MongoDB client
+client = MongoClient('mongodb://localhost:27017/')
+db = client['MYTUTOR']
+fs = GridFS(db)
+
+
+@app.post("/uploadtodb")
+async def upload_file(file: UploadFile = File(...)):
+    try:
+        contents = await file.read()
+
+        # Store the file in GridFS
+        file_id = fs.put(contents, filename=file.filename)
+        
+        return JSONResponse(content={"file_id": str(file_id), "filename": file.filename})
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
+
+@app.get("/files/{file_id}")
+async def get_file(file_id: str):
+    try:
+        gridout = await fs.get(ObjectId(file_id))
+        headers = {
+            'Content-Disposition': f'attachment; filename="{gridout.filename}"'
+        }
+        return StreamingResponse(gridout, headers=headers)
+
+    except Exception as e:
+        raise HTTPException(status_code=404, detail="File not found")
+
+@app.get("/recentfiles")
+async def get_recent_files():
+    try:
+        files_collection = db['fs.files']
+        
+        # Find the most recent files
+        cursor = files_collection.find({}, {"_id": 1, "filename": 1}).sort("_id", -1).limit(10)
+        files = [file for file in cursor]
+
+        # Fetch the file metadata
+        file_details = []
+        for file in files:
+            file_id = file['_id']
+            file_details.append({
+                'filename': file['filename'],
+                'file_url': f"/view/{file_id}"  # URL to view the file
+            })
+
+        return JSONResponse(content=file_details, status_code=200)
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+@app.get("/view/{file_id}")
+async def view_file(file_id: str):
+    try:
+        file_id = ObjectId(file_id)
+        grid_out = fs.get(file_id)
+        
+        # Get the file MIME type
+        mime_type, _ = guess_type(grid_out.filename)
+        if mime_type is None:
+            mime_type = "application/octet-stream"  # Default MIME type
+        
+        # Stream the file to the client
+        return StreamingResponse(BytesIO(grid_out.read()), media_type=mime_type)
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        raise HTTPException(status_code=404, detail="File not found")
+    
 # def generate_quiz(flashcards):
 #     quiz = []
 #     for card in flashcards:

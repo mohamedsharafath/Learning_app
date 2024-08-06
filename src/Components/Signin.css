@@ -1,32 +1,30 @@
 /* Main Container */
-
 .page {
     display: flex;
-    width: 218.5vh;
-    height: 103vh;
+    width: 100vw; /* Adjust to full viewport width */
+    height: 100vh; /* Adjust to full viewport height */
     background-color: #1A3636;
-
-    /* flex-direction: column; */
     align-items: center;
-    
     justify-content: space-around;
+    overflow: hidden; /* Hide any overflow */
+    padding: 15px;
 }
 
 /* Project Information Text */
 .project-info {
     text-align: center;
-    /* margin-bottom: 10px; */
-    width: 600px;
+    width: 80%; /* Responsive width */
+    max-width: 600px; /* Maximum width for larger screens */
 }
 
 /* Import a modern font family from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
 .project-info h1 {
-    margin-top: 40px;
+    margin-top: 20px;
     text-align: left;
     color: #FEFBD8;
-    font-size: 2.8em;
+    font-size: 2.8em; /* Adjusted for responsiveness */
     font-weight: 800;
     font-family: 'Poppins', sans-serif; /* Modern font family */
     transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and transformation */
@@ -36,7 +34,7 @@
 /* Define the animation */
 @keyframes fadeIn {
     0% {
-        opacity: 0;
+        opacity: 0.5;
         transform: translateY(-20px);
     }
     50% {
@@ -44,7 +42,7 @@
         transform: translateY(0);
     }
     100%{
-        opacity: 0;
+        opacity: 0.5;
         transform: translateY(-20px);
     }
 }
@@ -62,15 +60,14 @@
     cursor: pointer; /* Show pointer cursor on hover */
 }
 
-
 .page_image {
-    height: 450px;
-    width: 450px;
+    height: 400px; /* Adjusted for responsiveness */
+    width: 400px; /* Adjusted for responsiveness */
     position: relative;
     animation: float 6s ease-in-out infinite, jump 1s ease-in-out infinite;
     transform-style: preserve-3d;
     perspective: 1000px;
-    
+    justify-content: left;
 }
 
 /* Shadow Layer */
@@ -80,32 +77,15 @@
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%;
-    height: 20px;
+    width: 70%; /* Adjusted width for responsiveness */
+    height: 15px; /* Adjusted height for responsiveness */
     background: rgba(0, 0, 0, 0.5);
     filter: blur(10px);
     border-radius: 50%;
     z-index: -1;
     animation: shadowJump 1s ease-in-out infinite;
 }
-/* Tilt Animation */
-/* @keyframes tilt {
-    0% {
-        transform: rotateY(0deg);
-    }
-    25% {
-        transform: rotateY(20deg) ;
-    }
-    50% {
-        transform: rotateY(0deg) ;
-    }
-    75% {
-        transform: rotateY(40deg) ;
-    }
-    100% {
-        transform: rotateY(0deg);
-    }
-} */
+
 /* Floating Animation */
 @keyframes float {
     0% {
@@ -163,7 +143,7 @@
 
 .form-label {
     color: #D6BD98;
-    font-size: 2.3em;
+    font-size: 2.4em;
     justify-content: center;
     display: flex;
     margin: 50px;
@@ -186,6 +166,7 @@
     border: 1px solid black;
     outline: none;
     border-radius: 5px;
+    font-size: large;
 }
 .login .input-field{
     background:#40534C;
@@ -249,4 +230,57 @@
 
 #chk:checked ~ .signup .form-label {
     transform: scale(0.6);
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .project-info h1 {
+        font-size: 2em; /* Smaller font size for small screens */
+    }
+
+    .page_image {
+        height: 250px; /* Smaller image height for small screens */
+        width: 250px; /* Smaller image width for small screens */
+    }
+
+    .form-label {
+        font-size: 1.8em; /* Smaller font size for form labels */
+    }
+
+    .input-field, .submit-button {
+        width: 90%; /* Wider input fields and buttons for small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    
+    .project-info h1 {
+        font-size: 1.6em; /* Even smaller font size for very small screens */
+    }
+
+    .page_image {
+        height: 200px; /* Further reduce image size */
+        width: 200px; /* Further reduce image size */
+    }
+
+    .form-label {
+        font-size: 1.3em; /* Even smaller font size for form labels */
+        padding-top: 8px;
+        padding-right: 15px;
+    }
+    label .form-label{
+        padding-right: 25px;
+    }
+
+    .input-field, .submit-button {
+        width: 95%; /* Full width input fields and buttons for very small screens */
+        font-size: 12px;
+    }
+    .submit-button{
+        font-size: 15px;
+    }
+    .main {
+        width: 100%; /* Full width for very small screens */
+        margin: 0; /* Remove margin */
+    }
 }

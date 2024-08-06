@@ -1,0 +1,14 @@
+.file-view-container {
+    width: 220.9vh;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .file-view-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
