@@ -24,7 +24,7 @@ function App() {
         <Route path="/summarization" element={<Summarization response={responseData}/>} />
         <Route path="/quiz" element={<Quiz response={responseData}/>} />
         <Route path="/flashcards" element={<FlashCards response={responseData}/>} />
-        <Route path="/recentfiles" element={<RecentFiles/>} />
+        <Route path="/recentfiles" element={<RecentFiles setdata={setdata}/>} />
         <Route path="/view/:fileId" element={<FileView />} />
       </Routes>
     </Router>

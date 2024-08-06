@@ -17,7 +17,7 @@ from fpdf import FPDF
 import random
 import string
 import json
-
+from pymongo.errors import PyMongoError
 # from moviepy.editor import VideoFileClip
 # from quiz_generator import export_quiz
 # from flash_card_generator import export_flashcards
@@ -42,18 +42,34 @@ app.add_middleware(
 client = MongoClient('mongodb://localhost:27017/')
 db = client['MYTUTOR']
 fs = GridFS(db)
-
+metadata_collection = db["metadata"]  # Collection for storing metadata
 
 @app.post("/uploadtodb")
-async def upload_file(file: UploadFile = File(...)):
+async def upload_file(file: UploadFile = File(...), responseData: str = Form(...)):
     try:
+        # Read the file contents
         contents = await file.read()
-
+        
+        # Parse the responseData from JSON string
+        try:
+            response_data = json.loads(responseData)
+        except json.JSONDecodeError:
+            raise HTTPException(status_code=400, detail="Invalid JSON for response data.")
+        
         # Store the file in GridFS
         file_id = fs.put(contents, filename=file.filename)
-        
-        return JSONResponse(content={"file_id": str(file_id), "filename": file.filename})
 
+        # Store the response_data in a separate MongoDB collection
+        metadata_collection.insert_one({
+            "file_id": str(file_id),
+            "response_data": response_data
+        })
+
+        # Return the response with file info and response data
+        return JSONResponse(content={"file_id": str(file_id), "filename": file.filename, "response_data": response_data})
+
+    except PyMongoError as e:
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
 
@@ -83,6 +99,7 @@ async def get_recent_files():
         for file in files:
             file_id = file['_id']
             file_details.append({
+                'id': f"{file_id}",
                 'filename': file['filename'],
                 'file_url': f"/view/{file_id}"  # URL to view the file
             })
@@ -109,6 +126,28 @@ async def view_file(file_id: str):
         print(f"Error: {str(e)}")
         raise HTTPException(status_code=404, detail="File not found")
     
+@app.get("/filemetadata/{file_id}")
+async def get_file_metadata(file_id: str):
+    try:
+        # Ensure that file_id is valid
+        if not ObjectId.is_valid(file_id):
+            raise HTTPException(status_code=400, detail="Invalid file ID format.")
+        
+        # Fetch file metadata from the database
+        metadata = metadata_collection.find_one({"file_id": file_id})
+
+        if metadata:
+            return JSONResponse(content={
+                "file_id": metadata.get("file_id"),
+                "filename": metadata.get("filename"),
+                "file_url": metadata.get("file_url"),
+                "response_data": metadata.get("response_data", {})  # Ensure response_data is included
+            })
+        else:
+            raise HTTPException(status_code=404, detail="File metadata not found.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving file metadata: {str(e)}")
+
 # def generate_quiz(flashcards):
 #     quiz = []
 #     for card in flashcards:

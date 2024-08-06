@@ -23,16 +23,24 @@ const FileUpload = ({setfunc}) => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log(response.data)
-      setfunc(response.data);
+      // Handle first API response
+      const responseData = response.data;
+      console.log(responseData);
+      setfunc(responseData);
       toast.dismiss(); 
-    toast.success("Document Uploaded successfully!");
-    // Second API Call: Upload the file to MongoDB using /uploadtodb endpoint
-    const dbResponse = await axios.post('http://127.0.0.1:8000/uploadtodb', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+      toast.success("Document Uploaded successfully!");
+
+      // Prepare FormData for the second API call
+      const combinedFormData = new FormData();
+      combinedFormData.append('file', file);
+      combinedFormData.append('responseData', JSON.stringify(responseData)); // Append the response data
+
+      // Second API Call: Upload the file to MongoDB using /uploadtodb endpoint
+      const dbResponse = await axios.post('http://127.0.0.1:8000/uploadtodb', combinedFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
 
     if (dbResponse.status === 200) {
       toast.success("Document saved to database successfully!");
