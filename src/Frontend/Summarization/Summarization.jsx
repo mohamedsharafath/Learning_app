@@ -207,6 +207,8 @@ const ExportButton = ({ data, selected }) => {
 
 const Summarization = ({ response }) => {
   const [summary, setSummary] = useState("Summary");
+  const [isReading, setIsReading] = useState(false);
+  const [utterance, setUtterance] = useState(null);
 
   useEffect(() => {
     if (response != null) {
@@ -215,6 +217,19 @@ const Summarization = ({ response }) => {
   }, [response]);
 
   const newData = summary.replace("** ", "** /n");
+
+  const handleReadAloud = () => {
+    if (isReading) {
+      speechSynthesis.cancel();
+      setIsReading(false);
+    } else {
+      const newUtterance = new SpeechSynthesisUtterance(newData);
+      newUtterance.lang = 'en-US'; // Set the language if needed
+      speechSynthesis.speak(newUtterance);
+      setUtterance(newUtterance);
+      setIsReading(true);
+    }
+  };
 
   return (
     <Row justify="center" align="middle">
@@ -234,7 +249,26 @@ const Summarization = ({ response }) => {
           position: "relative",
         }}
       >
-        <ExportButton data={summary} selected={0} />
+        <div className='summary-btns' style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}>
+          <ExportButton data={summary} selected={0} />
+          <Button
+            onClick={handleReadAloud}
+            className="button-default"
+            style={{
+              fontWeight: "bolder",
+              backgroundColor: colors.quaternary,
+              color: colors.primary,
+              border: `1px solid ${colors.quaternary}`,
+            }}
+          >
+            {isReading ? "Stop" : "Start"} Read Aloud
+          </Button>
+        </div>
         <h1 style={{ color: "#F5EDED",fontWeight: "bolder",fontSize: "40px" }}>Summary:</h1>
         <style>{`
           ul {

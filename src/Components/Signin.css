@@ -231,6 +231,18 @@
 #chk:checked ~ .signup .form-label {
     transform: scale(0.6);
 }
+.oauth-sec {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.oauth-sec .google-button {
+    width: 100%;
+  }
 
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {

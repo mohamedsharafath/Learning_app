@@ -1,108 +1,27 @@
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import FileUpload from '../Frontend/FileUpload/FileUpload';
-// import './home.css'; // Adjust the path if necessary
-
-// const Home = ({ setfunc }) => {
-//   const [isSidebarOpen, setSidebarOpen] = useState(false);
-//   const navigate = useNavigate();
-
-//   const toggleSidebar = () => {
-//     setSidebarOpen(!isSidebarOpen);
-//   };
-
-//   return (
-//     <div className="container">
-//       <header className="header">
-//         <h1 className="logo">MY TUTOR</h1>
-//         <button className="sidebar-toggle-btn" onClick={toggleSidebar}>
-//           ☰
-//         </button>
-//         <nav className={`nav ${isSidebarOpen ? 'sidebar active' : 'sidebar'}`}>
-//           <span className="close-btn" onClick={toggleSidebar}>×</span>
-//           <a href="#features" className="nav-link">Features</a>
-//           <a href="#testimonials" className="nav-link">Testimonials</a>
-//           <a href="#contact" className="nav-link">Contact</a>
-//           <button onClick={() => navigate("/recentfiles")} className="recent-files">Recent Files</button>
-//         </nav>
-//         <nav className="desktop-nav">
-//           <a href="#features" className="nav-link">Features</a>
-//           <a href="#testimonials" className="nav-link">Testimonials</a>
-//           <a href="#contact" className="nav-link">Contact</a>
-//           {/* <button onClick={() => navigate("/recentfiles")}>Recent Files</button> */}
-//           <button onClick={() => navigate("/recentfiles")} className="recent-files">Recent Files</button>
-//         </nav>
-//       </header>
-//       <section className="hero-section">
-//         <h2 className="headline">Welcome to <span style={{ color: "black" }}>MY TUTOR</span></h2>
-//         <p className="sub-headline">Your AI-powered study companion</p>
-//         <FileUpload setfunc={setfunc} />
-//       </section>
-//       <section className="features-section" id="features">
-//         <h3 className="features-title">Features</h3>
-//         <div className="features-list">
-//           <div className="feature-item">
-//             <h4>Smart Flashcards</h4>
-//             <p>Automatically generated flashcards from your study materials.</p>
-//             <button className="cta-button" onClick={() => navigate("/flashcards")}>Generate Flashcards</button>
-//           </div>
-//           <div className="feature-item">
-//             <h4>Personalized Quiz</h4>
-//             <p>Quizzes tailored to your learning progress and needs.</p>
-//             <button className="cta-button" onClick={() => navigate("/quiz")}>Take Quiz</button>
-//           </div>
-//           <div className="feature-item">
-//             <h4>Short Summarizing</h4>
-//             <p>Summarize your entire study material in brief.</p>
-//             <a href="/summarization">
-//               <button className="cta-button">Get Summarized</button>
-//             </a>
-//           </div>
-//         </div>
-//       </section>
-//       <section className="testimonials-section" id="testimonials">
-//         <h3 className="testimonials-title">What our users say</h3>
-//         <div className="testimonial">
-//           <p>"<span style={{"fontWeight":"bolder"}}>MYTUTOR</span> has revolutionized the way I study. Highly recommended!"</p>
-//           <p>- Rajinikanth</p>
-//         </div>
-//         <div className="testimonial">
-//           <p>"The personalized quizzes are a game changer. I feel more prepared than ever."</p>
-//           <p>- Virat Kohli</p>
-//         </div>
-//       </section>
-//       <footer className="footer" id="contact">
-//         <p>© 2024 MY TUTOR. All rights reserved.</p>
-//         <div className="social-links">
-//           <a href="#" className="footer-link">Facebook</a>
-//           <a href="#" className="footer-link">Twitter</a>
-//           <a href="https://www.linkedin.com/in/mohamed-sharafath-a35377253/" target='_blank' className="footer-link">LinkedIn</a>
-//         </div>
-//       </footer>
-//     </div>
-//   );
-// };
-
-// export default Home;
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FileUpload from '../Frontend/FileUpload/FileUpload';
 import work from './undraw_work_from_anywhere_re_s2i6.svg';
 import education from './undraw_education_f8ru.svg';
 import SocialLinks from './SocialLinks';
+import { useLocation } from 'react-router-dom';
 import './home.css'; // Adjust the path if necessary
 
 const Home = ({ setfunc }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isDarkTheme, setDarkTheme] = useState(true);
+  const [isDarkTheme, setDarkTheme] = useState(false);
    const [hoveredIndex, setHoveredIndex] = useState(null);
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const { decode,name } = location.state || {};
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
   const handleThemeToggle = () => {
+    // console.log(signupData);
     setDarkTheme(!isDarkTheme);
     document.body.classList.toggle('dark-theme', !isDarkTheme);
   };
@@ -137,11 +56,26 @@ const Home = ({ setfunc }) => {
       <hr></hr>
       <section className="hero-section" id="home">
       <img src={education} alt="learning" className='page_image'/>
+      <div className='text-slide-in'>
+        <h2 className="headline">
+        Welcome to MY TUTOR <span style={{ color: "#E79E4F",fontWeight: "bolder" }}>{decode ? decode.name : name ? name : "User"}</span>, Your Ultimate Learning Companion
+        </h2>
+        <p className="sub-headline">
+            Dive into a world of personalized learning with MY TUTOR, where advanced AI technology adapts to your unique study needs.
+            {/* Whether you're preparing for exams, mastering new skills, or seeking additional support, MY TUTOR is here to guide you
+            every step of the way with tailored resources, interactive lessons, and real-time feedback. */}
+        </p>
+        {/* {signupData && (
         <div>
-        <h2 className="headline">Welcome to <span style={{ color: "#E79E4F" }}>MY TUTOR</span></h2>
-        <p className="sub-headline">Your AI-powered study companion</p>
-        <FileUpload setfunc={setfunc} />
+          <h2>Welcome, {signupData.name}!</h2>
+          <p>Username: {signupData.username}</p>
+          <p>Email: {signupData.email}</p>
+          
         </div>
+      )} */}
+        <FileUpload setfunc={setfunc} />
+      </div>
+
       </section>
       <hr></hr>
       <section className="features-section" id="features">
@@ -149,18 +83,18 @@ const Home = ({ setfunc }) => {
         <h3 className="features-title">Features</h3>
         <div className="features-list">
           <div className="feature-item">
-            <h4>Smart Flashcards</h4>
+            <h3>Smart Flashcards</h3>
             <p>Automatically generated flashcards from your study materials.</p>
             <button className="cta-button" onClick={() => navigate("/flashcards")}>Generate Flashcards</button>
           </div>
           <div className="feature-item">
-            <h4>Personalized Quiz</h4>
+            <h3>Personalized Quiz</h3>
             <p>Quizzes tailored to your learning progress and needs.</p>
             <button className="cta-button" onClick={() => navigate("/quiz")}>Take Quiz</button>
           </div>
           <div className="feature-item">
-            <h4>Short Summarizing</h4>
-            <p>Summarize your entire study material in brief.</p>
+            <h3>Short Summarizing</h3>
+            <p>Summarize your entire study material in brief within seconds.</p>
             <button className="cta-button" onClick={() => navigate("/summarization")}>Get Summarized</button>
           </div>
         </div>
@@ -190,18 +124,6 @@ const Home = ({ setfunc }) => {
                         </p>
                     </div>
 
-                    {/* <div className="footer-col">
-                        <h6>Categories</h6>
-                        <ul className="footer-links">
-                            <li><a href="http://scanfcode.com/category/c-language/">C</a></li>
-                            <li><a href="http://scanfcode.com/category/front-end-development/">UI Design</a></li>
-                            <li><a href="http://scanfcode.com/category/back-end-development/">PHP</a></li>
-                            <li><a href="http://scanfcode.com/category/java-programming-language/">Java</a></li>
-                            <li><a href="http://scanfcode.com/category/android/">Android</a></li>
-                            <li><a href="http://scanfcode.com/category/templates/">Templates</a></li>
-                        </ul>
-                    </div> */}
-
                     <div className="footer-col">
                         <h6>Quick Links</h6>
                         <ul className="footer-links">
@@ -228,14 +150,7 @@ const Home = ({ setfunc }) => {
                         </p>
                     </div>
 
-                    {/* <div className="footer-col">
-                        <ul className="social-icons">
-                            <li><a className="social-icon facebook" href="#"><i className="fa fa-facebook"></i></a></li>
-                            <li><a className="social-icon twitter" href="#"><i className="fa fa-twitter"></i></a></li>
-                            <li><a className="social-icon dribbble" href="#"><i className="fa fa-dribbble"></i></a></li>
-                            <li><a className="social-icon linkedin" href="#"><i className="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div> */}
+                    
                 </div>
             </div>
         </footer>

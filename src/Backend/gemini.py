@@ -13,7 +13,7 @@ genai.configure(api_key=KEY)
 def prompt_flashcards(prompt):
     model = genai.GenerativeModel("gemini-1.5-flash")
     response = model.generate_content(
-        "Given the following transcript, make 10 flashcards. Return these in JSON format. It should be a list of lists, where each sublist is two elements where the first element is the question/vocab word and the second element is the answer/definition. Don't output anything besides the JSON. Here is the transcript"
+        "Given the following transcript, make 10 flashcards. Return these in JSON format. It should be a list of lists, where each sublist is two elements where the first element is the question/vocab word and the second element is the answer/definition.The answer should be within 30 words. Don't output anything besides the JSON. Here is the transcript"
         + prompt
     )
     text = response.text
