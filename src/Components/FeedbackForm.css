@@ -1,0 +1,81 @@
+/* Feedback Form Container */
+.feedback-form {
+    background-color: var(--sidebar-background);
+    border: 1px solid var(--sidebar-background);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    /* color: var(--text-color); */
+    width: 600px;
+    /* height: 400px; */
+    margin-right: 150px;
+    /* margin: 0 auto; */
+}
+
+/* Feedback Form Heading */
+.feedback-form h6 {
+    color: white;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+
+/* Feedback Form Input Fields */
+.feedback-form input,
+.feedback-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--sidebar-background);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1em;
+    font-weight: 700;
+    color: black;
+    background-color: beige;
+    transition: border-color 0.3s;
+}
+
+/* Feedback Form Input Focus State */
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+    border-color: var(--cta-button-hover-background);
+    outline: none;
+}
+
+/* Feedback Form Submit Button */
+.feedback-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--cta-button-background);
+    color: black;
+    font-weight: bolder;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Button Hover State */
+.feedback-form button:hover {
+    background-color: var(--cta-button-hover-background);
+    transform: scale(1.05);
+}
+
+/* Feedback Form Message */
+.feedback-form p {
+    font-size: 1.4em;
+    color: var(--cta-button-background);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Responsive Styles for Feedback Form */
+@media (max-width: 767px) {
+    .feedback-form {
+        padding: 15px;
+        margin: 10px;
+    }
+}

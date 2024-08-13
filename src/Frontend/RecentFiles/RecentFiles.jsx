@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './RecentFiles.css';
 
-const RecentFiles = ({ setdata }) => {  // Use setdata to match the App component prop
+const RecentFiles = ({ setdata }) => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const { decode, name } = location.state || {};
 
   // Fetch files from the server
   const fetchFiles = async () => {
@@ -33,8 +35,10 @@ const RecentFiles = ({ setdata }) => {  // Use setdata to match the App componen
     window.open(fileUrl, '_blank'); // Open the file URL in a new tab
   };
 
-  const HandleStudy = async (fileId) => {
+  const handleStudy = async (fileId) => {
     console.log("File ID clicked:", fileId);
+    console.log(decode);
+    console.log(name);
     if (!fileId) {
       console.error("Invalid file ID");
       return;
@@ -51,7 +55,7 @@ const RecentFiles = ({ setdata }) => {  // Use setdata to match the App componen
       setdata(response_data);
       
       // Navigate to Home
-      navigate("/home");
+      navigate("/home", { state: { decode: decode, name: name } });
     } catch (error) {
       console.error("There was an error fetching the file metadata!", error);
       setError("There was an error fetching the file metadata.");
@@ -67,20 +71,18 @@ const RecentFiles = ({ setdata }) => {  // Use setdata to match the App componen
       {loading && <p className="loading">Loading...</p>}
       {error && <p className="error-message">{error}</p>}
       {files.length > 0 ? (
-        <ul className="file-list">
+        <div className="file-table">
           {files.map((file) => (
-            <li key={file.id} className="file-item">
-              <div className="file-box">
-                <button onClick={() => handleFileClick(file.file_url)} className="file-button">
-                  {file.filename}
-                </button>
-                <button onClick={() => HandleStudy(file.id)} className='file-button'>
-                  Study
-                </button>
-              </div>
-            </li>
+            <div key={file.id} className="file-row">
+              <button onClick={() => handleFileClick(file.file_url)} className="file-name">
+                {file.filename}
+              </button>
+              <button onClick={() => handleStudy(file.id)} className="study-button">
+                Study
+              </button>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         !loading && <p className="no-files">No files found</p>
       )}

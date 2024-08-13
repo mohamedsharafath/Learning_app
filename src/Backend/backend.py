@@ -18,6 +18,7 @@ import random
 import string
 import json
 from pymongo.errors import PyMongoError
+from pydantic import BaseModel
 # from moviepy.editor import VideoFileClip
 # from quiz_generator import export_quiz
 # from flash_card_generator import export_flashcards
@@ -26,6 +27,9 @@ from Summary.export_summary import export_summary
 from Quiz.export_quiz import export_quiz
 from FlashCards.export_flashcards import export_flashcards
 from gemini import prompt_everyting
+from gemini import prompt_recitation_comparison
+import speech_recognition as sr
+from pydub import AudioSegment
 # from speech_to_text import get_audio
 
 app = FastAPI()
@@ -43,6 +47,8 @@ client = MongoClient('mongodb://localhost:27017/')
 db = client['MYTUTOR']
 fs = GridFS(db)
 metadata_collection = db["metadata"]  # Collection for storing metadata
+
+
 
 @app.post("/uploadtodb")
 async def upload_file(file: UploadFile = File(...), responseData: str = Form(...)):
@@ -148,67 +154,6 @@ async def get_file_metadata(file_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving file metadata: {str(e)}")
 
-# def generate_quiz(flashcards):
-#     quiz = []
-#     for card in flashcards:
-#         if random.choice([True, False]):
-#             question = {"question": card[1], "possible_answers": [], "index": -1}
-#             incorrect_answers = [other_card[0] for other_card in flashcards if other_card != card]
-#             question["possible_answers"] = random.sample(incorrect_answers, 3)
-#             question["index"] = random.randint(0, 3)
-#             question["possible_answers"].insert(question["index"], card[0])
-#         else:
-#             question = {"question": card[0], "possible_answers": [], "index": -1}
-#             incorrect_answers = [other_card[1] for other_card in flashcards if other_card != card]
-#             question["possible_answers"] = random.sample(incorrect_answers, 3)
-#             question["index"] = random.randint(0, 3)
-#             question["possible_answers"].insert(question["index"], card[1])
-#         quiz.append(question)
-#     return quiz
-
-# def generate_id():
-#     ids = set()
-#     for file in os.listdir(os.getcwd() + "/database"):
-#         if file.endswith(".json"):
-#             ids.add(file)
-
-#     letters = string.ascii_letters + string.digits
-#     id = "".join(random.choice(letters) for _ in range(5))
-#     while id in ids:
-#         id = "".join(random.choice(letters) for _ in range(5))
-#     return id
-
-# def example_response():
-#     flash_cards = [
-#         ["Photosynthesis", "The process by which green plants and some other organisms use sunlight to synthesize foods with the help of chlorophyll."],
-#         ["Mitochondria", "Organelles that generate most of the chemical energy needed to power the biochemical reactions of cells."],
-#         ["Newton's Laws", "Three fundamental principles of classical mechanics proposed by Sir Isaac Newton."],
-#         ["H2O", "Chemical formula for water, composed of two hydrogen atoms bonded to one oxygen atom."],
-#         ["Civil Rights Movement", "A struggle for social justice that took place mainly during the 1950s and 1960s for African Americans to gain equal rights under the law in the United States."],
-#         ["Palindrome", "A word, phrase, number, or other sequence of characters that reads the same forward and backward."],
-#         ["The Great Depression", "A severe worldwide economic depression that took place mostly during the 1930s."],
-#         ["E=mc^2", "Albert Einstein's famous equation, which expresses the relationship between energy (E), mass (m), and the speed of light (c) squared."],
-#         ["Renaissance", "A period in European history marking the transition from the Middle Ages to modernity and covering the 14th to 17th centuries."],
-#         ["Cell Division", "The process by which a parent cell divides into two or more daughter cells."],
-#     ]
-    # summary = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pharetra vel turpis nunc eget lorem dolor sed. Diam vulputate ut pharetra sit amet. Amet dictum sit amet justo. Nibh praesent tristique magna sit amet purus gravida quis. Nunc id cursus metus aliquam eleifend mi in nulla posuere. Sollicitudin aliquam ultrices sagittis orci. Egestas erat imperdiet sed euismod nisi porta lorem mollis. In fermentum posuere urna nec tincidunt praesent semper feugiat nibh. Vel pharetra vel turpis nunc eget lorem. Suspendisse sed nisi lacus sed viverra tellus in hac habitasse. Adipiscing enim eu turpis egestas. Facilisis gravida neque convallis a cras semper. Quam quisque id diam vel quam elementum pulvinar etiam."""
-
-    # quiz = generate_quiz(flash_cards)
-
-    # id = generate_id()
-    # letters = string.ascii_letters + string.digits
-    # title = "Title " + "".join(random.choice(letters) for _ in range(8))
-    # db_json = {
-    #     "summary": summary,
-    #     "flash_cards": flash_cards,
-    #     "quiz": quiz,
-    #     "title": title,
-    # }
-
-    # with open(os.getcwd() + "/database/" + id + ".json", "w") as f:
-    #     json.dump(db_json, f)
-
-    # return {"id": id}
 
 def handle_pdf(file_path):
     reader = PdfReader(file_path)
@@ -232,9 +177,34 @@ def handle_docx(file_path):
         s += paragraph.text + "\n"
     return s
 
+# def convert_mp3_to_wav(mp3_file, wav_file):
+#     audio = AudioSegment.from_mp3(mp3_file)
+#     audio.export(wav_file, format="wav")
+
 # def handle_mp3(file_path):
-#     s = get_audio(file_path)
-#     return s
+#     wav_file = file_path.replace(".mp3", ".wav")
+    
+#     # Convert MP3 to WAV
+#     convert_mp3_to_wav(file_path, wav_file)
+
+#     recognizer = sr.Recognizer()
+    
+#     try:
+#         with sr.AudioFile(wav_file) as source:
+#             audio = recognizer.record(source)
+#             try:
+#                 # Using Google's Web Speech API (free)
+#                 transcript = recognizer.recognize_google(audio)
+#                 return transcript
+#             except sr.UnknownValueError:
+#                 return "Google Speech Recognition could not understand the audio"
+#             except sr.RequestError:
+#                 return "Could not request results from Google Speech Recognition service"
+#     finally:
+#         # Clean up WAV file
+#         if os.path.exists(wav_file):
+#             os.remove(wav_file)
+
 
 # def handle_mp4(file_path):
 #     video = VideoFileClip(file_path)
@@ -257,6 +227,26 @@ def handle_pptx(file_path):
 @app.get("/")
 async def hello_world():
     return {"message": "Hello, World!"}
+
+class RecitationRequest(BaseModel):
+    provided_text: str
+    transcript: str
+
+@app.post("/recitation")
+async def recitation(request: Request):
+    try:
+        data = await request.json()
+        provided_text = data.get('provided_text')
+        transcript = data.get('transcript')
+
+        # Assuming you have a function to compare the texts
+        comparison_report = prompt_recitation_comparison(provided_text, transcript)
+
+        return {"comparison_report": comparison_report}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error comparing transcript: {str(e)}")
+
+
 
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
@@ -283,57 +273,8 @@ async def upload(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Unsupported file type")
 
     response = prompt_everyting(s)
-    # quiz2 = generate_quiz(response["flash_cards"])
-    # response["quiz"] += quiz2
-    # random.shuffle(response["quiz"])
-
-    # id = generate_id()
-    # response["id"] = id
-    # with open(os.getcwd() + "/database/" + id + ".json", "w") as f:
-    #     json.dump(response, f)
-
-    return response
-
-# @app.post("/fetch_id")
-# async def fetch_id(request: dict):
-#     id = request.get("id")
-#     try:
-#         with open(os.getcwd() + "/database/" + id + ".json", "r") as f:
-#             data = json.load(f)
-#         return data
-#     except FileNotFoundError:
-#         raise HTTPException(status_code=404, detail="ID not found")
-
-# @app.get("/recent")
-# async def recent():
-#     output = {"recent": []}
-#     i = 0
-#     for file in os.listdir(os.getcwd() + "/database"):
-#         if i == 10:
-#             break
-#         if file.endswith(".json"):
-#             with open(os.getcwd() + "/database/" + file, "r") as f:
-#                 data = json.load(f)
-#                 id = file.split(".json")[0]
-#                 title = data["title"]
-#                 output["recent"].append({"id": id, "title": title})
-#         i += 1
-#     return output
-
-# @app.post("/export")
-# async def export(request: dict):
-#     selected = request.get("selected")
-#     data = request.get("data")
     
-#     if selected == 0:
-#         export_summary(data["summary"], "Summary.docx")
-#         return FileResponse("Summary.docx", filename="Summary.docx")
-#     elif selected == 1:
-#         export_flashcards(data["flash_cards"], "Flashcards.docx")
-#         return FileResponse("Flashcards.docx", filename="Flashcards.docx")
-#     else:
-#         export_quiz(data["quiz"], "Quiz.docx")
-#         return FileResponse("Quiz.docx", filename="Quiz.docx")
+    return response
 
 @app.post("/export")
 async def export(request: Request):

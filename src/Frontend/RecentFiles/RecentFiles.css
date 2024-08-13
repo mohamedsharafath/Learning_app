@@ -1,59 +1,3 @@
-/* .recent-files-container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-.fetch-files-button {
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.file-list {
-  list-style: none;
-  padding: 0;
-}
-
-.file-item {
-  margin-bottom: 10px;
-}
-
-.file-item button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.file-item button:hover {
-  background: #0056b3;
-}
-
-.file-viewer {
-  margin-top: 20px;
-}
-
-.back-button {
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
-
-.back-button:hover {
-  background: #5a6268;
-}
-
-.error-message {
-  color: red;
-} */
 /* Color Variables */
 :root {
   --primary-color: #2D3250;    /* 1st rank - majority color */
@@ -79,26 +23,22 @@
   margin-bottom: 20px;
   color: #F5EDED;
   font-weight: bolder;
-  font-size: 40px
+  font-size: 40px;
 }
 
 .fetch-files-button {
   display: block;
   width: 20%;
   padding: 10px;
-  margin-bottom: 20px;
-  
+  margin: 20px 0;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px;
-  margin-bottom: 20px;
-        font-weight: bolder;
-        font-size: 20px;
-        background-color: var(--quaternary-color);
-        color: var(--primary-color);
-        border: 1px solid var(--quaternary-color),
-  
+  font-weight: bolder;
+  font-size: 20px;
+  background-color: var(--quaternary-color);
+  color: var(--primary-color);
+  border: 1px solid var(--quaternary-color);
 }
 
 .fetch-files-button:hover {
@@ -117,38 +57,47 @@
   color: red;
 }
 
-.file-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.file-table {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
 }
 
-.file-item {
+.file-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
-}
-
-.file-box {
-  padding: 15px;
-  /* background-color: var(--primary-color); */
+  padding: 10px;
+  background-color: var(--primary-color);
   color: var(--quaternary-color);
   border-radius: 10px;
-  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
-  text-align: center;
-  
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
-.file-button {
-  background-color: var(--primary-color);
+.file-name {
+  flex: 1;
+  text-align: left;
+  font-size: 16px;
+  padding: 10px;
+  background-color: transparent;
   border: none;
   color: var(--quaternary-color);
-  font-size: 16px;
-  padding: 20px;
-  border-radius: 15px;
   cursor: pointer;
-  transition: color 0.3s ease;
-  margin-right: 20px;
 }
 
-.file-button:hover {
-  color: var(--tertiary-color);
+.study-button {
+  background-color: var(--quaternary-color);
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.study-button:hover {
+  background-color: var(--primary-color);
+  color: var(--quaternary-color);
 }

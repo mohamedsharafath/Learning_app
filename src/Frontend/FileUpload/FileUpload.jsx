@@ -56,7 +56,7 @@ const FileUpload = ({setfunc}) => {
 
   return (
     <div className="file-upload-container">
-      <h1>Upload a Document to to Practice</h1>
+      <h1>Upload a Document to Practice</h1>
       <form onSubmit={handleSubmit} className="formField">
         <input type="file" onChange={handleFileChange} required className="file-input"/>
         <style>

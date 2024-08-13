@@ -8,6 +8,7 @@ import FileView from './Frontend/RecentFiles/FileView';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 import RecentFiles from './Frontend/RecentFiles/RecentFiles';
+import SpeechToText from './Frontend/SpeechToText/SpeechToText';
 
 function App() {
   const [responseData, setResponseData] = useState(null);
@@ -26,6 +27,7 @@ function App() {
         <Route path="/flashcards" element={<FlashCards response={responseData}/>} />
         <Route path="/recentfiles" element={<RecentFiles setdata={setdata}/>} />
         <Route path="/view/:fileId" element={<FileView />} />
+        <Route path="/speech" element={<SpeechToText />} />
       </Routes>
     </Router>
     

@@ -9,6 +9,15 @@ load_dotenv()
 KEY = os.environ.get('GOOGLE_GENERATIVEAI_API_KEY')
 genai.configure(api_key=KEY)
 
+# Add this function to your existing gemini.py file
+
+def prompt_recitation_comparison(provided_text, transcript):
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    response = model.generate_content(
+        "Compare the following transcript with the provided text and provide a detailed comparison report. Indicate whether the recitation matches the provided text and tell how many percent they both matches and highlight discrepancies. Here is the provided text:" + provided_text + " and the transcript: " + transcript
+    )
+    return response.text
+
 
 def prompt_flashcards(prompt):
     model = genai.GenerativeModel("gemini-1.5-flash")

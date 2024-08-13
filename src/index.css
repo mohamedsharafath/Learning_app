@@ -1,3 +1,50 @@
+@import "~react-alice-carousel/lib/alice-carousel.css";
+:root {
+  --background-color: #F5EDED;  /* quartenary color */
+  --header-background: #6482AD;  /* primary color */
+  --sidebar-background: #7FA1C3;  /* secondary color */
+  --feature-item-background: #E2DAD6;  /* tertiary color */
+  --cta-button-background: #DFD3C3;  /* secondary color */
+  --cta-button-hover-background: #C8B8A8;  /* primary color */
+  --footer-background: #6482AD;  /* primary color */
+  --footer-text-color: #E2DAD6;  /* tertiary color */
+  --recent-files-color: #E2DAD6;  /* tertiary color */
+  --recent-files-hover-color: #6482AD;  /* primary color */
+  --switch-slider-background: #7FA1C3;  /* secondary color */
+  --switch-slider-before-background: #F5EDED;  /* quartenary color */
+  --text-color: #3b3a3a;  /* Use a neutral color for text */
+}
+
+/* Dark theme */
+body.dark-theme {
+  --background-color: #f5f5f5;
+  --header-background: #070F2B;
+  --sidebar-background: #424769;
+  --feature-item-background: #2D3250;
+  --cta-button-background: #9290C3;
+  --cta-button-hover-background: #535C91;
+  --footer-background: #070F2B;
+  --footer-text-color: #787776;
+  --recent-files-color: #F6B17A;
+  --recent-files-hover-color: #070F2B;
+  --switch-slider-background: #73C0FC;
+  --switch-slider-before-background: #e8e8e8;
+  --text-color: rgb(88, 84, 84)919;
+  /* --background-color: #121212;
+  --header-background: #1e1e1e;
+  --sidebar-background: #333;
+  --feature-item-background: #444;
+  --cta-button-background: #333;
+  --cta-button-hover-background: #555;
+  --footer-background: #1e1e1e;
+  --footer-text-color: #ccc;
+  --recent-files-color: #F6B17A;
+  --recent-files-hover-color: #e0e0e0;
+  --switch-slider-background: #555;
+  --switch-slider-before-background: #333;
+  --text-color: #e0e0e0; */
+  
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +52,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color:red;
 }
 
 code {

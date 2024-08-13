@@ -99,6 +99,76 @@ body {
     color: var(--cta-button-hover-background); /* Color change on hover */
     transform: scale(1.1); /* Enlarge the link on hover */
 }
+/* Container Styling */
+.speech-container {
+    max-width: 800px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--feature-item-background);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading Style */
+  .speech-container h2 {
+    text-align: center;
+    color: var(--header-background);
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  /* Paragraph Style */
+  .speech-container p {
+    text-align: center;
+    color: var(--text-color);
+    font-size: 1em;
+    margin-bottom: 20px;
+  }
+  
+  /* Main Content Style */
+  .speech-main-content {
+    padding: 15px;
+    background-color: var(--cta-button-background);
+    border: 1px solid var(--feature-item-background);
+    border-radius: 5px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 100px;
+    min-width: 500px;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+    color: var(--text-color);
+  }
+  
+  /* Button Container Style */
+  .speech-btn-style {
+    text-align: center;
+  }
+  
+  /* Button Styling */
+  .speech-btn-style button {
+    background-color: var(--cta-button-background);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  /* Button Hover Effect */
+  .speech-btn-style button:hover {
+    background-color: var(--cta-button-hover-background);
+    transform: scale(1.05);
+  }
+  
+  /* Button Active Effect */
+  .speech-btn-style button:active {
+    background-color: var(--cta-button-background);
+    transform: scale(1);
+  }
 
 /* Sidebar Styling */
 .sidebar {
@@ -241,6 +311,7 @@ body {
 /* CTA Button Styling */
 .cta-button {
     margin-top: 16px;
+    margin-left: 10px;
     padding: 10px 20px;
     font-size: 1em;
     color: white;
@@ -315,6 +386,7 @@ body {
 
 .features-list {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
@@ -342,11 +414,114 @@ body {
 }
 
 .feature-item button{
-    /* background-color: var(--recent-files-color); */
+    background-color: var(--recent-files-color);
     /* color: #000; */
     color: var(--text-color);
     font-weight: bold;
 }
+/* From Uiverse.io by vamsidevendrakumar */ 
+/* Light Theme */
+.card {
+    width: 500px;
+    height: 150px;
+    perspective: 1000px;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.999s;
+}
+
+.card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    background-color: var(--sidebar-background); /* Primary color */
+    color: var(--text-color); /* Tertiary color */
+    display: flex;
+    align-items: center;
+    border: 10px solid var(--header-background); /* Primary color */
+    border-radius: 30px;
+    justify-content: center;
+    font-size: 24px;
+    transform: rotateY(0deg);
+}
+
+.card-back {
+    background-color: var(--cta-button-background); /* Secondary color */
+    color: var(--text-color); /* Neutral color */
+    display: flex;
+    align-items: center;
+    border: 10px solid var(--cta-button-background); /* Secondary color */
+    border-radius: 10px;
+    justify-content: space-between;
+    font-size: 24px;
+    transform: rotateY(180deg);
+    padding: 10px;
+}
+
+
+  
+.how-it-works-section {
+    width: 100%;
+    padding: 60px 20px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--header-background);
+    text-align: center;
+    color: white;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: var(--background-color);
+    margin-bottom: 1rem;
+}
+
+.how-it-works-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    color: #FFFFFF;
+}
+
+.step {
+    background-color: var(--sidebar-background);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.step h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: var(--background-color);
+}
+
+.step p {
+    margin: 0;
+    font-size: 20px;
+    /* color: #333; */
+}
+
 
 /* Testimonials Section */
 .testimonials-section {
@@ -369,10 +544,12 @@ body {
     padding: 20px;
     margin-bottom: 10px;
     background-color: var(--sidebar-background);
+    color: white;
     border: 1px solid #7077A1;
     border-radius: 10px;
     text-align: center;
-    color: #FFFFFF;
+    font-weight: 600;
+    /* color: #FFFFFF/; */
 }
 
 .testimonial p {
@@ -444,7 +621,7 @@ body {
 }
 
 .social-icons li {
-    display: inline-block;
+    display: flex;
     margin-bottom: 4px;
 }
 
@@ -496,11 +673,13 @@ body {
     flex: 1;
     padding: 0 15px;
     box-sizing: border-box;
-    justify-content: center;
-    align-items: center;
-    margin-left: 20px;
+    justify-content: space-between ;
+    align-items: left;
+    /* margin-left: 20px; */
     margin-bottom: 30px;
 }
+
+
 
 .copyright-text {
     margin: 0;
@@ -679,26 +858,26 @@ body {
     margin-top: 20px;
 }
 /* From Uiverse.io by wilsondesouza */ 
+/* From Uiverse.io by wilsondesouza */ 
 ul {
     list-style: none;
   }
   
   .example-2 {
+    margin-top: 20px;
     display: flex;
-    justify-content: left;
-    align-items: left;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .example-2 .icon-content {
     margin: 0 10px;
     position: relative;
-    padding: 0.5rem;
   }
   .example-2 .icon-content .tooltip {
     position: absolute;
-    top: 100%;
-    right: 110%;
-    transform: translateY(200%);
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
     color: #fff;
     padding: 6px 10px;
     border-radius: 5px;
@@ -727,7 +906,7 @@ ul {
   }
   .example-2 .icon-content a:hover {
     box-shadow: 3px 2px 45px 0px rgb(0 0 0 / 12%);
-  } 
+  }
   .example-2 .icon-content a svg {
     position: relative;
     z-index: 1;
